@@ -18,3 +18,9 @@ make a class for item that has a mostly blank constructor
 read through the input file. When item is encountered, make a new item object.
 keep reading lines and add the attributes directly to the itme object with setters
 that add the item to the attribute that would be string lists.
+
+right under root there are 5 nodes, for each section of the data
+
+when there are multiple is_a's, just take the first path to the root
+
+formatting the query

@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class HPOExplorer {
@@ -16,7 +17,7 @@ public class HPOExplorer {
             int count = 0;
             while ((line = reader.readLine()) != null) {
                 if (line.equals("[Term]")) {
-                    System.out.println("Calling loadItem");
+                    //System.out.println("Calling loadItem");
                     items.add(loadItem(reader));
                 }
                 count++;
@@ -32,10 +33,14 @@ public class HPOExplorer {
     private static Item loadItem(BufferedReader reader) {
         try {
             String line = null;
-            String id = reader.readLine();
-            String name = reader.readLine();
+            String id = reader.readLine().substring(4);
+            String name = reader.readLine().substring(6);
             Item t = new Item(id, name);
             while ((line = reader.readLine()) != null && !line.equals("")) {
+                if (line.substring(0,4).equals("name")){
+                    // There are two cases where the [is anonymous comes before the name]
+                    // fix this by reomving name from the constructor and have it be added to the object as it parses file.
+                }
                 if (line.substring(0, 7).equals("comment")) {
                     t.addComment(line.substring(8));
                 } else if (line.substring(0, 6).equals("alt_id")) {
@@ -66,6 +71,8 @@ public class HPOExplorer {
                     t.addDef(line.substring(4));
                 } else {
                     System.out.println("There is another attr type!!!!!!!!!!!!!!");
+                    System.out.println(line);
+                    t.printData();
                 }
 
             }
@@ -73,19 +80,28 @@ public class HPOExplorer {
         } catch (IOException ie) {
             ie.printStackTrace();
         } finally {
-            System.out.println("done Item");
+            //System.out.println("done Item");
         }
         return null;
+    }
+
+    private static HashMap<String, Integer> indexItems(){
+        System.out.println(items.size());
+        HashMap<String, Integer> index = new HashMap<>();
+        for (int i = 0; i<items.size();i++){
+            index.put(items.get(i).getId(), i);
+        }
+        return index;
     }
 
     public static void main(String[] args) {
 
         System.out.println("Hello world!");
         loadData("C:\\_Root Folder\\ComputerPrograming\\HPO-Explorer\\res\\HPO.txt");
+        HashMap<String, Integer> index = indexItems();
+        System.out.println(index);
 
-        for (Item i : items.subList(0, 50)){
-            i.printData();
-        }
+        items.get(index.get("HP:0010982")).printData();
 
     }
 
