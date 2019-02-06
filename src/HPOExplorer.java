@@ -1,3 +1,4 @@
+import javax.lang.model.type.ArrayType;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 public class HPOExplorer {
 
     private static ArrayList<Item> items = new ArrayList<>();
+    private static Query longestQuery;
 
     private static void loadData(String fileName) {
         try {
@@ -59,6 +61,7 @@ public class HPOExplorer {
                         break;
                     case "is_a":
                         t.addIs_a(tokens[1]);
+                        t.addParentId(tokens[1].split(" ! ")[0]);
                         break;
                     case "is_anonymous":
                         t.addIs_anonymous(tokens[1]);
@@ -109,13 +112,51 @@ public class HPOExplorer {
         return index;
     }
 
+
+    private static void addParentsToItem(Item child, HashMap<String, Integer> index){
+        if (child.getParentIds().size()>0){
+            System.out.println(child.getParentIds());
+            for (String parentId : child.getParentIds()){
+                Item parent = items.get(index.get(parentId));
+                child.addParent(parent);
+                if (!(parentId.equals("HP:0000001"))){
+                    parent.addChild(child);
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         loadData("C:\\_Root Folder\\ComputerPrograming\\HPO-Explorer\\res\\HPO.txt");
         HashMap<String, Integer> index = indexItems();
         //System.out.println(index);
 
-        items.get(index.get("HP:0010982")).printData();
+        for (Item item : items){
+            addParentsToItem(item, index);
+        }
+
+        //addParentsToItem(items.get(index.get("HP:0010982")), index);
+        //items.get(index.get("HP:0010982")).printData();
+        //items.get(index.get("HP:0010982")).getParents().get(0).printData();
+        longestQuery = new Query(items.get(0).getId(), items, index);
+
+        for (Item item : items){
+            Query q = new Query(item.getId(), items, index);
+            q.runQuery();
+            if (q.getLength()>longestQuery.getLength()){
+                longestQuery = q;
+            }
+        }
+        System.out.println("!!!!!!!!!!!!!!!!!!!The longest Query is length: ");
+        System.out.println(longestQuery.getLength());
+        System.out.println("From the item: ");
+        longestQuery.getLeaf().printData();
+        System.out.println("Here is the query:");
+        System.out.println(" ");
+        longestQuery.runQuery();
+
+
 
     }
 

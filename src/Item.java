@@ -21,6 +21,10 @@ public class Item {
     private ArrayList<String> subset = new ArrayList<>();
     private ArrayList<String> synonym = new ArrayList<>();
     private ArrayList<String> xref = new ArrayList<>();
+    private ArrayList<String> parentIds = new ArrayList<>();
+    private ArrayList<Item> children = new ArrayList<>();
+    private ArrayList<Item> parents = new ArrayList<>();
+
 
     // constructors ------------------------------------------------------------
 
@@ -96,7 +100,20 @@ public class Item {
         return xref;
     }
 
+    public ArrayList<String> getParentIds() {
+        return parentIds;
+    }
+
+    public ArrayList<Item> getChildren() {
+        return children;
+    }
+
+    public ArrayList<Item> getParents() {
+        return parents;
+    }
+
     public void printData(){
+        System.out.println("<< Item start.");
         System.out.println(getId());
         System.out.println(getName());
         if (getDef().size()>0){
@@ -141,7 +158,7 @@ public class Item {
         if (getXref().size()>0) {
             System.out.println(getXref());
         }
-
+        System.out.println("item end. >> \n");
 
 
     }
@@ -213,4 +230,22 @@ public class Item {
     public void addXref(String xref) {
         this.xref.add(xref);
     }
+
+    public void addParentId(String id) {
+        this.parentIds.add(id);
+    }
+
+    public void addParent(Item parent) {
+        this.parents.add(parent);
+    }
+
+    public void addChild(Item child) {
+        this.children.add(child);
+    }
+
+    // behavior methods --------------------------------------------------------
+
+
+
 }
+
