@@ -24,7 +24,7 @@ public class Item {
 
     // constructors ------------------------------------------------------------
 
-    public Item(String id, String name) {
+    public Item(String id) {
         setId(id);
         setName(name);
     }
