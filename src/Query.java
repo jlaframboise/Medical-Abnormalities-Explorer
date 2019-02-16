@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,6 +17,7 @@ public class Query {
     public void traverseToRoot(Item node){
         length++;
         if (node.getId().equals("HP:0000001")){
+
             node.printData();
         }else if(node.getParents().size()>0){
             traverseToRoot(node.getParents().get(0));
@@ -28,4 +30,8 @@ public class Query {
     public void runQuery(){
         traverseToRoot(leaf);
     }
+
+
+
+
 }

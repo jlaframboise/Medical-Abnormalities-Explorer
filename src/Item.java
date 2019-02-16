@@ -1,4 +1,7 @@
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 public class Item {
@@ -112,56 +115,174 @@ public class Item {
         return parents;
     }
 
-    public void printData(){
-        System.out.println("<< Item start.");
-        System.out.println(getId());
-        System.out.println(getName());
-        if (getDef().size()>0){
-            System.out.println(getDef());
+    public ArrayList<String> getData() {
+        ArrayList<String> data = new ArrayList<>();
+        data.add("[Term]");
+        data.add("id");
+        data.add(getId());
+        data.add("name");
+        data.add(getName());
+        if (getDef().size() > 0) {
+            data.addAll(getDef());
         }
-        if (getAlt_id().size()>0) {
-            System.out.println(getAlt_id());
+        if (getAlt_id().size() > 0) {
+            data.addAll(getAlt_id());
         }
-        if (getComment().size()>0) {
-            System.out.println(getComment());
+        if (getComment().size() > 0) {
+            data.addAll(getComment());
         }
-        if (getConsider().size()>0) {
-            System.out.println(getConsider());
+        if (getConsider().size() > 0) {
+            data.addAll(getConsider());
         }
-        if (getCreated_by().size()>0) {
-            System.out.println(getCreated_by());
+        if (getCreated_by().size() > 0) {
+            data.addAll(getCreated_by());
         }
-        if (getCreation_date().size()>0) {
-            System.out.println(getCreation_date());
+        if (getCreation_date().size() > 0) {
+            data.addAll(getCreation_date());
         }
-        if (getIs_a().size()>0) {
-            System.out.println(getIs_a());
+        if (getIs_a().size() > 0) {
+            data.addAll(getIs_a());
         }
-        if (getIs_anonymous().size()>0) {
-            System.out.println(getIs_anonymous());
+        if (getIs_anonymous().size() > 0) {
+            data.addAll(getIs_anonymous());
         }
-        if (getIs_obsolete().size()>0) {
-            System.out.println(getIs_obsolete());
+        if (getIs_obsolete().size() > 0) {
+            data.addAll(getIs_obsolete());
         }
-        if (getProperty_value().size()>0) {
-            System.out.println(getProperty_value());
+        if (getProperty_value().size() > 0) {
+            data.addAll(getProperty_value());
         }
-        if (getReplaced_by().size()>0) {
-            System.out.println(getReplaced_by());
+        if (getReplaced_by().size() > 0) {
+            data.addAll(getReplaced_by());
         }
-        if (getSubset().size()>0) {
-            System.out.println(getSubset());
+        if (getSubset().size() > 0) {
+            data.addAll(getSubset());
         }
-        if (getSynonym().size()>0) {
-            System.out.println(getSynonym());
+        if (getSynonym().size() > 0) {
+            data.addAll(getSynonym());
         }
-        if (getXref().size()>0) {
-            System.out.println(getXref());
+        if (getXref().size() > 0) {
+            data.addAll(getXref());
         }
-        System.out.println("item end. >> \n");
+        return data;
 
 
     }
+
+    public void writeData() {
+        ArrayList<String> keywords = new ArrayList<>(Arrays.asList("def", "name", "alt_id", "id", "comment", "synonym", "xref",
+                "is_a", "created_by", "creation_date", "subset", "consider", "is_anonymous",
+                "is_obsolete", "property_value", "replaced_by"));
+        for (String str : getData()) {
+            try {
+                if (keywords.contains(str)) {
+                    HPOExplorer.writer.write(str+ ": ");
+                } else {
+                    HPOExplorer.writer.write(str + "\n");
+                }
+
+            } catch (IOException ie) {
+                System.out.println("OOps error in node writing. ");
+                ie.printStackTrace();
+            }
+
+        }
+    }
+
+    public void printData() {
+        ArrayList<String> keywords = new ArrayList<>(Arrays.asList("def", "name", "alt_id", "id", "comment", "synonym", "xref",
+                "is_a", "created_by", "creation_date", "subset", "consider", "is_anonymous",
+                "is_obsolete", "property_value", "replaced_by"));
+        for (String str : getData()) {
+            if (keywords.contains(str)) {
+                System.out.print(str+ ": ");
+            } else {
+                System.out.println(str);
+            }
+        }
+    }
+    /*
+    public void writeData(BufferedWriter writer) {
+        try {
+            writer.write("<< Item start."); // the problem is write needs a string but i am giving it an arrayList.
+            writer.write(getId());
+            writer.write(getName());
+            if (getDef().size() > 0) {
+                for (String att : getDef()) {
+                    writer.write(att);
+                }
+            }
+            if (getAlt_id().size() > 0) {
+                for (String att : getAlt_id()) {
+                    writer.write(att);
+                }
+            }
+            if (getComment().size() > 0) {
+                for (String att : getComment()) {
+                    writer.write(att);
+                }
+            }
+            if (getConsider().size() > 0) {
+                for (String att : getConsider()) {
+                    writer.write(att);
+                }
+            }
+            if (getCreated_by().size() > 0) {
+                for (String att : getCreated_by()) {
+                    writer.write(att);
+                }
+            }
+            if (getCreation_date().size() > 0) {
+                for (String att : getCreation_date()) {
+                    writer.write(att);
+                }
+            }
+            if (getIs_a().size() > 0) {
+                for (String att : getIs_a()) {
+                    writer.write(att);
+                }
+            }
+            if (getIs_anonymous().size() > 0) {
+                for (String att : getIs_anonymous()) {
+                    writer.write(att);
+                }
+            }
+            if (getIs_obsolete().size() > 0) {
+                for (String att : getIs_obsolete()) {
+                    writer.write(att);
+                }
+            }
+            if (getProperty_value().size() > 0) {
+                for (String att : getProperty_value()) {
+                    writer.write(att);
+                }
+            }
+            if (getReplaced_by().size() > 0) {
+                for (String att : getReplaced_by()) {
+                    writer.write(att);
+                }
+            }
+            if (getSubset().size() > 0) {
+                for (String att : getSubset()) {
+                    writer.write(att);
+                }
+            }
+            if (getSynonym().size() > 0) {
+                for (String att : getSynonym()) {
+                    writer.write(att);
+                }
+            }
+            if (getXref().size() > 0) {
+                for (String att : getXref()) {
+                    writer.write(att);
+                }
+            }
+            writer.write("item end. >> \n");
+        } catch (IOException ie) {
+            ie.printStackTrace();
+        }
+    }
+    */
 
     // mutators ----------------------------------------------------------------
 
@@ -244,7 +365,6 @@ public class Item {
     }
 
     // behavior methods --------------------------------------------------------
-
 
 
 }

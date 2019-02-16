@@ -1,5 +1,7 @@
 import javax.lang.model.type.ArrayType;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,6 +14,7 @@ public class HPOExplorer {
 
     private static ArrayList<Item> items = new ArrayList<>();
     private static Query longestQuery;
+    public static BufferedWriter writer;
 
     private static void loadData(String fileName) {
         try {
@@ -45,46 +48,60 @@ public class HPOExplorer {
                         t.setName(tokens[1]);
                         break;
                     case "comment":
+                        t.addComment(tokens[0]);
                         t.addComment(tokens[1]);
                         break;
                     case "alt_id":
+                        t.addAlt_id(tokens[0]);
                         t.addAlt_id(tokens[1]);
                         break;
                     case "consider":
+                        t.addConsider(tokens[0]);
                         t.addConsider(tokens[1]);
                         break;
                     case "created_by":
+                        t.addCreated_by(tokens[0]);
                         t.addCreated_by(tokens[1]);
                         break;
                     case "creation_date":
+                        t.addCreation_date(tokens[0]);
                         t.addCreation_date(tokens[1]);
                         break;
                     case "is_a":
+                        t.addIs_a(tokens[0]);
                         t.addIs_a(tokens[1]);
                         t.addParentId(tokens[1].split(" ! ")[0]);
                         break;
                     case "is_anonymous":
+                        t.addIs_anonymous(tokens[0]);
                         t.addIs_anonymous(tokens[1]);
                         break;
                     case "is_obsolete":
+                        t.addIs_obsolete(tokens[0]);
                         t.addIs_obsolete(tokens[1]);
                         break;
                     case "property_value":
+                        t.addProperty_value(tokens[0]);
                         t.addProperty_value(tokens[1]);
                         break;
                     case "replaced_by":
+                        t.addComment(tokens[0]);
                         t.addReplaced_by(tokens[1]);
                         break;
                     case "subset":
+                        t.addSubset(tokens[0]);
                         t.addSubset(tokens[1]);
                         break;
                     case "synonym":
+                        t.addSynonym(tokens[0]);
                         t.addSynonym(tokens[1]);
                         break;
                     case "xref":
+                        t.addXref(tokens[0]);
                         t.addXref(tokens[1]);
                         break;
                     case "def":
+                        t.addDef(tokens[0]);
                         t.addDef(tokens[1]);
                         break;
                     default:
@@ -126,19 +143,7 @@ public class HPOExplorer {
         }
     }
 
-    public static void main(String[] args) {
-
-        loadData("C:\\_Root Folder\\ComputerPrograming\\HPO-Explorer\\res\\HPO.txt");
-        HashMap<String, Integer> index = indexItems();
-        //System.out.println(index);
-
-        for (Item item : items){
-            addParentsToItem(item, index);
-        }
-
-        //addParentsToItem(items.get(index.get("HP:0010982")), index);
-        //items.get(index.get("HP:0010982")).printData();
-        //items.get(index.get("HP:0010982")).getParents().get(0).printData();
+    public static void findLongestPath(ArrayList<Item> items, HashMap<String, Integer> index){
         longestQuery = new Query(items.get(0).getId(), items, index);
 
         for (Item item : items){
@@ -155,6 +160,45 @@ public class HPOExplorer {
         System.out.println("Here is the query:");
         System.out.println(" ");
         longestQuery.runQuery();
+    }
+
+
+
+    public static void main(String[] args) {
+
+        loadData("C:\\_Root Folder\\ComputerPrograming\\HPO-Explorer\\res\\HPO.txt");
+        HashMap<String, Integer> index = indexItems();
+        //System.out.println(index);
+
+        for (Item item : items){
+            addParentsToItem(item, index);
+        }
+
+        //addParentsToItem(items.get(index.get("HP:0010982")), index);
+        //items.get(index.get("HP:0010982")).printData();
+        //items.get(index.get("HP:0010982")).getParents().get(0).printData();
+        //findLongestPath(items, index);
+        try{
+            HPOExplorer.writer = new BufferedWriter(new FileWriter("outFile.txt"));
+            writer.write("Hello java world\n");
+            items.get(2).writeData();
+            writer.close();
+        }catch (IOException ie){
+            System.out.println("OOps. file out error. ");
+            ie.printStackTrace();
+        }finally{
+
+            System.out.println("Done writing. ");
+            items.get(2).printData();
+        }
+
+//        ArrayList<String> a = new ArrayList<>();
+//        ArrayList<String> b = new ArrayList<>();
+//        a.add("hello");
+//        b.add(" world");
+//        b.add(" This works");
+//        a.addAll(b);
+//        System.out.println(a);
 
 
 
