@@ -1,36 +1,36 @@
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 
 public class Term {
     // class variables ---------------------------------------------------------
+
     private String id = null;
-
-
     private String name = null;
-    private ArrayList<String> def = new ArrayList<>();
-    private ArrayList<String> alt_id = new ArrayList<>();
-    private ArrayList<String> comment = new ArrayList<>();
-    private ArrayList<String> consider = new ArrayList<>();
-    private ArrayList<String> created_by = new ArrayList<>();
-    private ArrayList<String> creation_date = new ArrayList<>();
-    private ArrayList<String> is_a = new ArrayList<>();
-    private ArrayList<String> is_anonymous = new ArrayList<>();
-    private ArrayList<String> is_obsolete = new ArrayList<>();
-    private ArrayList<String> property_value = new ArrayList<>();
-    private ArrayList<String> replaced_by = new ArrayList<>();
-    private ArrayList<String> subset = new ArrayList<>();
-    private ArrayList<String> synonym = new ArrayList<>();
-    private ArrayList<String> xref = new ArrayList<>();
-    private ArrayList<String> parentIds = new ArrayList<>();
-    private ArrayList<Term> children = new ArrayList<>();
-    private ArrayList<Term> parents = new ArrayList<>();
+    // lists to hold vavirous attributes of a term
+    private final ArrayList<String> def = new ArrayList<>();
+    private final ArrayList<String> alt_id = new ArrayList<>();
+    private final ArrayList<String> comment = new ArrayList<>();
+    private final ArrayList<String> consider = new ArrayList<>();
+    private final ArrayList<String> created_by = new ArrayList<>();
+    private final ArrayList<String> creation_date = new ArrayList<>();
+    private final ArrayList<String> is_a = new ArrayList<>();
+    private final ArrayList<String> is_anonymous = new ArrayList<>();
+    private final ArrayList<String> is_obsolete = new ArrayList<>();
+    private final ArrayList<String> property_value = new ArrayList<>();
+    private final ArrayList<String> replaced_by = new ArrayList<>();
+    private final ArrayList<String> subset = new ArrayList<>();
+    private final ArrayList<String> synonym = new ArrayList<>();
+    private final ArrayList<String> xref = new ArrayList<>();
+    private final ArrayList<String> parentIds = new ArrayList<>();
+    private final ArrayList<Term> children = new ArrayList<>();
+    private final ArrayList<Term> parents = new ArrayList<>();
 
 
     // constructors ------------------------------------------------------------
 
+    // a constructor of the term object, using just the name and id and the rest
+    // is added as they appear in the file.
     public Term(String id) {
         setId(id);
         setName(name);
@@ -39,6 +39,8 @@ public class Term {
 
     // accessors ---------------------------------------------------------------
 
+    // these functions are self explanatory and are the getters for all
+    // the attributes of the terms
     public String getId() {
         return id;
     }
@@ -107,14 +109,12 @@ public class Term {
         return parentIds;
     }
 
-    public ArrayList<Term> getChildren() {
-        return children;
-    }
-
     public ArrayList<Term> getParents() {
         return parents;
     }
 
+    // this method will return all of the data for an item so it can be
+    // taken and either printed or written to file.
     public ArrayList<String> getData() {
         ArrayList<String> data = new ArrayList<>();
         data.add("[Term]");
@@ -178,6 +178,8 @@ public class Term {
         }
     }
 
+    // instead of setting, these are adding because there could be any number
+    // of some attrs
     public void setName(String name) {
         this.name = name;
     }
@@ -252,6 +254,7 @@ public class Term {
 
     // behavior methods --------------------------------------------------------
 
+    // a function to take the data from an object and print it to file
     public void writeData() {
         ArrayList<String> keywords = new ArrayList<>(Arrays.asList("def", "name", "alt_id", "id", "comment", "synonym", "xref",
                 "is_a", "created_by", "creation_date", "subset", "consider", "is_anonymous",
@@ -263,15 +266,14 @@ public class Term {
                 } else {
                     HPOExplorer.writer.write(str + "\n");
                 }
-
             } catch (IOException ie) {
                 System.out.println("OOps error in node writing. ");
                 ie.printStackTrace();
             }
-
         }
     }
 
+    // a method to take the data from an object and print it to console.
     public void printData() {
         ArrayList<String> keywords = new ArrayList<>(Arrays.asList("def", "name", "alt_id", "id", "comment", "synonym", "xref",
                 "is_a", "created_by", "creation_date", "subset", "consider", "is_anonymous",
@@ -284,7 +286,5 @@ public class Term {
             }
         }
     }
-
-
 }
 

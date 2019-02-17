@@ -1,4 +1,3 @@
-import javax.lang.model.type.ArrayType;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -10,24 +9,23 @@ public class HPOExplorer {
 
     // class variables ---------------------------------------------------------
 
-    private static ArrayList<Term> terms = new ArrayList<>();
-    private static Query longestQuery;
+    private static final ArrayList<Term> terms = new ArrayList<>();
     public static BufferedWriter writer;
     public static HashMap<String, Integer> index;
 
     // behavior methods --------------------------------------------------------
 
+    // a function to read data from HPO.txt and load in each term when it finds
+    // a line with [Term], into an array list called terms
     private static void loadData(String fileName) {
         try {
             BufferedReader reader = Files.newBufferedReader(Paths.get(fileName));
-            String line = null;
-            int count = 0;
+            String line;
             while (((line = reader.readLine()) != null)) {
                 if (line.equals("[Term]")) {
                     //System.out.println("Calling loadTerm");
                     terms.add(loadTermByTokens(reader));
                 }
-                count++;
             }
         } catch (IOException ie) {
             ie.printStackTrace();
@@ -35,9 +33,12 @@ public class HPOExplorer {
 
     }
 
+    // a method to go line by line until it finds end of file or a blank line,
+    // and at each line it looks for one of a set of attributes and it adds
+    // that attribute to the term object. It returns the term object.
     private static Term loadTermByTokens(BufferedReader reader) {
         try {
-            String line = null;
+            String line;
             String id = reader.readLine().substring(4);
             Term t = new Term(id);
             while ((line = reader.readLine()) != null && !line.equals("")) {
@@ -120,7 +121,9 @@ public class HPOExplorer {
         return null;
     }
 
-
+    // a function that creates a hashmap 'index' which maps a string id to
+    // an integer index of where to find the term in the terms arraylist
+    // takes in a string id and returns an integer index
     private static HashMap<String, Integer> indexTerms() {
         //System.out.println(terms.size());
         HashMap<String, Integer> index = new HashMap<>();
@@ -130,7 +133,8 @@ public class HPOExplorer {
         return index;
     }
 
-
+    // A method that takes in the child term and adds references to the parent
+    // term objects to the child. It takes in the child object and the index
     private static void addParentsToTerm(Term child, HashMap<String, Integer> index) {
         if (child.getParentIds().size() > 0) {
             //System.out.println(child.getParentIds());
@@ -144,8 +148,11 @@ public class HPOExplorer {
         }
     }
 
-    public static void findLongestPath(ArrayList<Term> terms) {
-        longestQuery = new Query(terms.get(0).getId(), terms);
+    // a method that queries every possible id and keeps the query that has
+    // the most links back to the root node. It returns nothing but writes the
+    // longest query to file.
+    private static void findLongestPath(ArrayList<Term> terms) {
+        Query longestQuery = new Query(terms.get(0).getId(), terms);
 
         for (Term term : terms) {
             Query q = new Query(term.getId(), terms);
@@ -154,12 +161,6 @@ public class HPOExplorer {
                 longestQuery = q;
             }
         }
-        //System.out.println("!!!!!!!!!!!!!!!!!!!The longest Query is length: ");
-        //System.out.println(longestQuery.getLength());
-        //System.out.println("From the term: ");
-        longestQuery.getLeaf().printData();
-        //System.out.println("Here is the query:");
-        //System.out.println(" ");
         try {
             HPOExplorer.writer.write("max_path=" + longestQuery.getLength() + "\n");
         } catch (IOException ie) {
@@ -168,8 +169,9 @@ public class HPOExplorer {
         longestQuery.runQuery(true);
     }
 
-    public static void runQueries() {
-
+    // a method to run all the queries that are listed by id in the queries.txt file.
+    // writes the query answer to file.
+    private static void runQueries() {
         try {
             BufferedReader reader = Files.newBufferedReader(Paths.get("res\\queries.txt"));
             String line;
@@ -187,7 +189,8 @@ public class HPOExplorer {
         }
     }
 
-
+    // a main function to drive the parsing of HPO.txt, organizing the ontology,
+    // running queries and writing the results.
     public static void main(String[] args) {
 
         loadData("res\\HPO.txt");

@@ -1,29 +1,31 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Query {
 
     // class variables ---------------------------------------------------------
-    private Term leaf;
+    private final Term leaf;
     private int length = 0;
 
     // constructors ------------------------------------------------------------
 
-
+    // a constructor for the query class, retrieves the leaf node from the
+    // ontology
     public Query(String id, ArrayList<Term> terms){
         this.leaf = terms.get(HPOExplorer.index.get(id));
     }
 
-    // accessors ---------------------------------------------------------------
+    // accessors ---------------------------------- -----------------------------
 
+    // a getter for length
     public int getLength(){ return length -1; }
-
-    public Term getLeaf(){ return leaf; }
 
     // behavior methods --------------------------------------------------------
 
-    public void traverseToRoot(Term node, boolean outputToFile){
+    // a recursive function to stop on the root node, and recall itself focused
+    // on its parent node. This will run up the tree to root, and write the
+    // query on the forward direction of recursion.
+    private void traverseToRoot(Term node, boolean outputToFile){
         length++;
         if (node.getId().equals("HP:0000001")){
             try{
@@ -31,12 +33,10 @@ public class Query {
                     node.writeData();
                     HPOExplorer.writer.write("\n");
                 }
-
             }catch(IOException ie){
                 ie.printStackTrace();
             }
         }else if(node.getParents().size()>0){
-
             if (outputToFile){
                 node.writeData();
                 try{
@@ -46,15 +46,11 @@ public class Query {
                 }
             }
             traverseToRoot(node.getParents().get(0), outputToFile);
-
-
             //node.printData();
-        }else{
-            ;
-            //System.out.println("!!!!! Island found!!!!!!!!!!!!!");
         }
     }
 
+    // a simple function to call the recursive function
     public void runQuery(boolean outputToFile){
         traverseToRoot(leaf, outputToFile);
     }
