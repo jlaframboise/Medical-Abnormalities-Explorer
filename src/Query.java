@@ -3,16 +3,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Query {
+
+    // class variables ---------------------------------------------------------
     private Term leaf;
     private int length = 0;
+
+    // constructors ------------------------------------------------------------
+
 
     public Query(String id, ArrayList<Term> terms){
         this.leaf = terms.get(HPOExplorer.index.get(id));
     }
 
+    // accessors ---------------------------------------------------------------
+
     public int getLength(){ return length -1; }
 
     public Term getLeaf(){ return leaf; }
+
+    // behavior methods --------------------------------------------------------
 
     public void traverseToRoot(Term node, boolean outputToFile){
         length++;

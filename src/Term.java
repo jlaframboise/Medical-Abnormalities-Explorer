@@ -169,120 +169,6 @@ public class Term {
 
     }
 
-    public void writeData() {
-        ArrayList<String> keywords = new ArrayList<>(Arrays.asList("def", "name", "alt_id", "id", "comment", "synonym", "xref",
-                "is_a", "created_by", "creation_date", "subset", "consider", "is_anonymous",
-                "is_obsolete", "property_value", "replaced_by"));
-        for (String str : getData()) {
-            try {
-                if (keywords.contains(str)) {
-                    HPOExplorer.writer.write(str+ ": ");
-                } else {
-                    HPOExplorer.writer.write(str + "\n");
-                }
-
-            } catch (IOException ie) {
-                System.out.println("OOps error in node writing. ");
-                ie.printStackTrace();
-            }
-
-        }
-    }
-
-    public void printData() {
-        ArrayList<String> keywords = new ArrayList<>(Arrays.asList("def", "name", "alt_id", "id", "comment", "synonym", "xref",
-                "is_a", "created_by", "creation_date", "subset", "consider", "is_anonymous",
-                "is_obsolete", "property_value", "replaced_by"));
-        for (String str : getData()) {
-            if (keywords.contains(str)) {
-                System.out.print(str+ ": ");
-            } else {
-                System.out.println(str);
-            }
-        }
-    }
-    /*
-    public void writeData(BufferedWriter writer) {
-        try {
-            writer.write("<< Term start."); // the problem is write needs a string but i am giving it an arrayList.
-            writer.write(getId());
-            writer.write(getName());
-            if (getDef().size() > 0) {
-                for (String att : getDef()) {
-                    writer.write(att);
-                }
-            }
-            if (getAlt_id().size() > 0) {
-                for (String att : getAlt_id()) {
-                    writer.write(att);
-                }
-            }
-            if (getComment().size() > 0) {
-                for (String att : getComment()) {
-                    writer.write(att);
-                }
-            }
-            if (getConsider().size() > 0) {
-                for (String att : getConsider()) {
-                    writer.write(att);
-                }
-            }
-            if (getCreated_by().size() > 0) {
-                for (String att : getCreated_by()) {
-                    writer.write(att);
-                }
-            }
-            if (getCreation_date().size() > 0) {
-                for (String att : getCreation_date()) {
-                    writer.write(att);
-                }
-            }
-            if (getIs_a().size() > 0) {
-                for (String att : getIs_a()) {
-                    writer.write(att);
-                }
-            }
-            if (getIs_anonymous().size() > 0) {
-                for (String att : getIs_anonymous()) {
-                    writer.write(att);
-                }
-            }
-            if (getIs_obsolete().size() > 0) {
-                for (String att : getIs_obsolete()) {
-                    writer.write(att);
-                }
-            }
-            if (getProperty_value().size() > 0) {
-                for (String att : getProperty_value()) {
-                    writer.write(att);
-                }
-            }
-            if (getReplaced_by().size() > 0) {
-                for (String att : getReplaced_by()) {
-                    writer.write(att);
-                }
-            }
-            if (getSubset().size() > 0) {
-                for (String att : getSubset()) {
-                    writer.write(att);
-                }
-            }
-            if (getSynonym().size() > 0) {
-                for (String att : getSynonym()) {
-                    writer.write(att);
-                }
-            }
-            if (getXref().size() > 0) {
-                for (String att : getXref()) {
-                    writer.write(att);
-                }
-            }
-            writer.write("term end. >> \n");
-        } catch (IOException ie) {
-            ie.printStackTrace();
-        }
-    }
-    */
 
     // mutators ----------------------------------------------------------------
 
@@ -365,6 +251,39 @@ public class Term {
     }
 
     // behavior methods --------------------------------------------------------
+
+    public void writeData() {
+        ArrayList<String> keywords = new ArrayList<>(Arrays.asList("def", "name", "alt_id", "id", "comment", "synonym", "xref",
+                "is_a", "created_by", "creation_date", "subset", "consider", "is_anonymous",
+                "is_obsolete", "property_value", "replaced_by"));
+        for (String str : getData()) {
+            try {
+                if (keywords.contains(str)) {
+                    HPOExplorer.writer.write(str + ": ");
+                } else {
+                    HPOExplorer.writer.write(str + "\n");
+                }
+
+            } catch (IOException ie) {
+                System.out.println("OOps error in node writing. ");
+                ie.printStackTrace();
+            }
+
+        }
+    }
+
+    public void printData() {
+        ArrayList<String> keywords = new ArrayList<>(Arrays.asList("def", "name", "alt_id", "id", "comment", "synonym", "xref",
+                "is_a", "created_by", "creation_date", "subset", "consider", "is_anonymous",
+                "is_obsolete", "property_value", "replaced_by"));
+        for (String str : getData()) {
+            if (keywords.contains(str)) {
+                System.out.print(str + ": ");
+            } else {
+                System.out.println(str);
+            }
+        }
+    }
 
 
 }
