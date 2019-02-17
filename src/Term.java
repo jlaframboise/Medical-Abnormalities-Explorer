@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-public class Item {
+public class Term {
     // class variables ---------------------------------------------------------
     private String id = null;
 
@@ -25,13 +25,13 @@ public class Item {
     private ArrayList<String> synonym = new ArrayList<>();
     private ArrayList<String> xref = new ArrayList<>();
     private ArrayList<String> parentIds = new ArrayList<>();
-    private ArrayList<Item> children = new ArrayList<>();
-    private ArrayList<Item> parents = new ArrayList<>();
+    private ArrayList<Term> children = new ArrayList<>();
+    private ArrayList<Term> parents = new ArrayList<>();
 
 
     // constructors ------------------------------------------------------------
 
-    public Item(String id) {
+    public Term(String id) {
         setId(id);
         setName(name);
     }
@@ -107,11 +107,11 @@ public class Item {
         return parentIds;
     }
 
-    public ArrayList<Item> getChildren() {
+    public ArrayList<Term> getChildren() {
         return children;
     }
 
-    public ArrayList<Item> getParents() {
+    public ArrayList<Term> getParents() {
         return parents;
     }
 
@@ -204,7 +204,7 @@ public class Item {
     /*
     public void writeData(BufferedWriter writer) {
         try {
-            writer.write("<< Item start."); // the problem is write needs a string but i am giving it an arrayList.
+            writer.write("<< Term start."); // the problem is write needs a string but i am giving it an arrayList.
             writer.write(getId());
             writer.write(getName());
             if (getDef().size() > 0) {
@@ -277,7 +277,7 @@ public class Item {
                     writer.write(att);
                 }
             }
-            writer.write("item end. >> \n");
+            writer.write("term end. >> \n");
         } catch (IOException ie) {
             ie.printStackTrace();
         }
@@ -356,11 +356,11 @@ public class Item {
         this.parentIds.add(id);
     }
 
-    public void addParent(Item parent) {
+    public void addParent(Term parent) {
         this.parents.add(parent);
     }
 
-    public void addChild(Item child) {
+    public void addChild(Term child) {
         this.children.add(child);
     }
 

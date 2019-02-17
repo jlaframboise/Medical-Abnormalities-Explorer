@@ -3,32 +3,51 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Query {
-    private Item leaf;
+    private Term leaf;
     private int length = 0;
 
-    public Query(String id, ArrayList<Item> items, HashMap<String, Integer> index){
-        this.leaf = items.get(index.get(id));
+    public Query(String id, ArrayList<Term> terms){
+        this.leaf = terms.get(HPOExplorer.index.get(id));
     }
 
-    public int getLength(){ return length; }
+    public int getLength(){ return length -1; }
 
-    public Item getLeaf(){ return leaf; }
+    public Term getLeaf(){ return leaf; }
 
-    public void traverseToRoot(Item node){
+    public void traverseToRoot(Term node, boolean outputToFile){
         length++;
         if (node.getId().equals("HP:0000001")){
+            try{
+                if (outputToFile){
+                    node.writeData();
+                    HPOExplorer.writer.write("\n");
+                }
 
-            node.printData();
+            }catch(IOException ie){
+                ie.printStackTrace();
+            }
         }else if(node.getParents().size()>0){
-            traverseToRoot(node.getParents().get(0));
-            node.printData();
+
+            if (outputToFile){
+                node.writeData();
+                try{
+                    HPOExplorer.writer.write("\n");
+                }catch(IOException ie){
+                    ie.printStackTrace();
+                }
+            }
+            traverseToRoot(node.getParents().get(0), outputToFile);
+
+
+            //node.printData();
         }else{
-            System.out.println("!!!!! Island found!!!!!!!!!!!!!");
+            ;
+            //System.out.println("!!!!! Island found!!!!!!!!!!!!!");
         }
     }
 
-    public void runQuery(){
-        traverseToRoot(leaf);
+    public void runQuery(boolean outputToFile){
+        traverseToRoot(leaf, outputToFile);
     }
 
 

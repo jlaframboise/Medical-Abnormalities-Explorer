@@ -1,8 +1,5 @@
 import javax.lang.model.type.ArrayType;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -12,9 +9,10 @@ import java.util.HashMap;
 
 public class HPOExplorer {
 
-    private static ArrayList<Item> items = new ArrayList<>();
+    private static ArrayList<Term> terms = new ArrayList<>();
     private static Query longestQuery;
     public static BufferedWriter writer;
+    public static HashMap<String, Integer> index;
 
     private static void loadData(String fileName) {
         try {
@@ -23,8 +21,8 @@ public class HPOExplorer {
             int count = 0;
             while (((line = reader.readLine()) != null)) {
                 if (line.equals("[Term]")) {
-                    //System.out.println("Calling loadItem");
-                    items.add(loadItemByTokens(reader));
+                    //System.out.println("Calling loadTerm");
+                    terms.add(loadTermByTokens(reader));
                 }
                 count++;
             }
@@ -34,11 +32,11 @@ public class HPOExplorer {
 
     }
 
-    private static Item loadItemByTokens(BufferedReader reader){
+    private static Term loadTermByTokens(BufferedReader reader){
         try{
             String line = null;
             String id = reader.readLine().substring(4);
-            Item t = new Item(id);
+            Term t = new Term(id);
             while ((line = reader.readLine()) != null && !line.equals("")){
                 String[] tokens = line.split(": ");
                 //System.out.println(tokens);
@@ -120,21 +118,21 @@ public class HPOExplorer {
     }
 
 
-    private static HashMap<String, Integer> indexItems(){
-        System.out.println(items.size());
+    private static HashMap<String, Integer> indexTerms(){
+        System.out.println(terms.size());
         HashMap<String, Integer> index = new HashMap<>();
-        for (int i = 0; i<items.size();i++){
-            index.put(items.get(i).getId(), i);
+        for (int i = 0; i<terms.size();i++){
+            index.put(terms.get(i).getId(), i);
         }
         return index;
     }
 
 
-    private static void addParentsToItem(Item child, HashMap<String, Integer> index){
+    private static void addParentsToTerm(Term child, HashMap<String, Integer> index){
         if (child.getParentIds().size()>0){
-            System.out.println(child.getParentIds());
+            //System.out.println(child.getParentIds());
             for (String parentId : child.getParentIds()){
-                Item parent = items.get(index.get(parentId));
+                Term parent = terms.get(index.get(parentId));
                 child.addParent(parent);
                 if (!(parentId.equals("HP:0000001"))){
                     parent.addChild(child);
@@ -143,54 +141,87 @@ public class HPOExplorer {
         }
     }
 
-    public static void findLongestPath(ArrayList<Item> items, HashMap<String, Integer> index){
-        longestQuery = new Query(items.get(0).getId(), items, index);
+    public static void findLongestPath(ArrayList<Term> terms){
+        longestQuery = new Query(terms.get(0).getId(), terms);
 
-        for (Item item : items){
-            Query q = new Query(item.getId(), items, index);
-            q.runQuery();
+        for (Term term : terms){
+            Query q = new Query(term.getId(), terms);
+            q.runQuery(false);
             if (q.getLength()>longestQuery.getLength()){
                 longestQuery = q;
             }
         }
         System.out.println("!!!!!!!!!!!!!!!!!!!The longest Query is length: ");
         System.out.println(longestQuery.getLength());
-        System.out.println("From the item: ");
+        System.out.println("From the term: ");
         longestQuery.getLeaf().printData();
         System.out.println("Here is the query:");
         System.out.println(" ");
-        longestQuery.runQuery();
+        try{
+            HPOExplorer.writer.write("max_path="+longestQuery.getLength()+"\n");
+        }catch(IOException ie){
+            ie.printStackTrace();
+        }
+        longestQuery.runQuery(true);
+    }
+
+    public static void runQueries(){
+
+        try{
+            BufferedReader reader = Files.newBufferedReader(Paths.get("res\\queries.txt"));
+            String line;
+            while ((line = reader.readLine())!=null){
+                System.out.println(line);
+                String id = line.split(": ")[1];
+                Query q = new Query(id, terms);
+                writer.write("[query_answer]\n");
+                q.runQuery(true);
+                writer.write("");
+            }
+        }catch (IOException ie){
+            System.out.println("error in io. ");
+            ie.printStackTrace();
+        }
     }
 
 
 
     public static void main(String[] args) {
 
-        loadData("C:\\_Root Folder\\ComputerPrograming\\HPO-Explorer\\res\\HPO.txt");
-        HashMap<String, Integer> index = indexItems();
+        loadData("res\\HPO.txt");
+        HPOExplorer.index = indexTerms();
         //System.out.println(index);
 
-        for (Item item : items){
-            addParentsToItem(item, index);
+        for (Term term : terms){
+            addParentsToTerm(term, index);
         }
 
-        //addParentsToItem(items.get(index.get("HP:0010982")), index);
-        //items.get(index.get("HP:0010982")).printData();
-        //items.get(index.get("HP:0010982")).getParents().get(0).printData();
-        //findLongestPath(items, index);
         try{
-            HPOExplorer.writer = new BufferedWriter(new FileWriter("outFile.txt"));
-            writer.write("Hello java world\n");
-            items.get(2).writeData();
-            writer.close();
+            HPOExplorer.writer = new BufferedWriter(new FileWriter("res\\results.txt"));
+            //writer.write("TEST???"); // file created so opened but no results in it. look into file closing in java.
+            runQueries();
+            HPOExplorer.writer.close();
+
         }catch (IOException ie){
-            System.out.println("OOps. file out error. ");
             ie.printStackTrace();
         }finally{
-
-            System.out.println("Done writing. ");
-            items.get(2).printData();
+            //System.out.println("\nDone execution.");
         }
+
+        try{
+            HPOExplorer.writer = new BufferedWriter(new FileWriter("res\\maxpath.txt"));
+            findLongestPath(terms);
+            HPOExplorer.writer.close();
+        }catch (IOException ie){
+            //System.out.println("IO OOps in main.");
+            ie.printStackTrace();
+        }finally{
+            //System.out.println("Done filing maxpath. ");
+        }
+
+
+
+
 
 //        ArrayList<String> a = new ArrayList<>();
 //        ArrayList<String> b = new ArrayList<>();
