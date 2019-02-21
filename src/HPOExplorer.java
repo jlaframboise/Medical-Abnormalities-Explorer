@@ -203,7 +203,7 @@ public class HPOExplorer {
     // running queries and writing the results.
     public static void main(String[] args) {
         System.out.println("Welcome to the HPO Explorer!");
-        System.out.println("This program will read in the terms from HPO.txt");
+        System.out.println("This program will read in the terms from HPO.txt.");
         System.out.println("It will store and query the data and will output");
         System.out.println("the results to results.txt, and output the longest");
         System.out.println("query to maxpath.txt.");
@@ -246,6 +246,7 @@ public class HPOExplorer {
         }
 
         System.out.println("Completed!");
+        System.out.println("Thank-you for using the HPO Explorer!");
     }
 
 
