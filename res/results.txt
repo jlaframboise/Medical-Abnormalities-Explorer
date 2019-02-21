@@ -1,0 +1,228 @@
+[query_answer]
+[Term]
+id: HP:0010982
+name: Polygenic inheritance
+def: "A type of multifactorial inheritance governed by the simultaneous action of many (more than three) gene loci." [HPO:probinson, ISBN:978-0192628961]
+created_by: peter
+creation_date: 2011-02-08T10:12:39Z
+is_a: HP:0001426 ! Multifactorial inheritance
+xref: MSH:D020412
+xref: UMLS:C1148552
+
+[Term]
+id: HP:0001426
+name: Multifactorial inheritance
+def: "A mode of inheritance that depends on a mixture of major and minor genetic determinants possibly together with environmental factors. Diseases inherited in this manner are termed complex diseases." [HPO:probinson]
+alt_id: HP:0001429
+alt_id: HP:0001472
+comment: The observed inheritance for a multifactorial genetic trait or disorder may have a higher frequency within the same family, whether the etiology is genetic or environmental, or a combination of the two.
+is_a: HP:0000005 ! Mode of inheritance
+synonym: "Familial predisposition" RELATED []
+xref: MSH:D020412
+xref: UMLS:C0600599
+
+[Term]
+id: HP:0000005
+name: Mode of inheritance
+def: "The pattern in which a particular genetic trait or disorder is passed from one generation to the next." [HPO:probinson]
+alt_id: HP:0001453
+alt_id: HP:0001461
+is_a: HP:0000001 ! All
+synonym: "Inheritance" EXACT []
+xref: UMLS:C1708511
+
+[Term]
+id: HP:0000001
+name: All
+comment: Root of all terms in the Human Phenotype Ontology.
+xref: UMLS:C0444868
+
+[query_answer]
+[Term]
+id: HP:0031472
+name: Risk taking
+def: "Engagement in dangerous, risky, and potentially self-damaging activities, unnecessarily and without regard to consequences; lack of concern for one's limitations and denial of the reality of personal danger." [PMID:23902698]
+is_a: HP:0000734 ! Disinhibition
+property_value: http://purl.org/dc/elements/1.1/creator "peter" xsd:string
+property_value: http://purl.org/dc/elements/1.1/date 2017-09-17T16:44:22Z xsd:dateTime
+
+[Term]
+id: HP:0000734
+name: Disinhibition
+def: "A lack of restraint manifested in several ways, including disregard for social conventions, impulsivity, and poor risk assessment." [HPO:sdoelken]
+comment: Disinhibition affects motor, instinctual, emotional, cognitive and perceptual aspects with signs and symptoms similar to the diagnostic criteria for mania. Hypersexuality, hyperphagia, and aggressive outbursts are indicative of disinhibited instinctual drives.
+is_a: HP:0031466 ! Impairment in personality functioning
+synonym: "Disinhibition" EXACT layperson []
+xref: SNOMEDCT_US:247977003
+xref: UMLS:C0424296
+
+[Term]
+id: HP:0031466
+name: Impairment in personality functioning
+def: "A maladaptive personality trait characterized by moderate or greater impairment in personality (self /interpersonal) functioning." [PMID:23902698]
+comment: The emergence of the self in childhood and adolescence is based on experience and perception, which then becomes organized into identity, which organizes further experience and perception. Identity is related to the individual's selfsameness and continuity in time.
+is_a: HP:0000708 ! Behavioral abnormality
+property_value: http://purl.org/dc/elements/1.1/creator "peter" xsd:string
+property_value: http://purl.org/dc/elements/1.1/date 2017-09-17T16:30:45Z xsd:dateTime
+
+[Term]
+id: HP:0000708
+name: Behavioral abnormality
+def: "An abnormality of mental functioning including various affective, behavioural, cognitive and perceptual abnormalities." [HPO:probinson]
+alt_id: HP:0000715
+alt_id: HP:0002368
+alt_id: HP:0002456
+is_a: HP:0012638 ! Abnormality of nervous system physiology
+synonym: "Behavioral abnormality" EXACT layperson []
+synonym: "Behavioral changes" EXACT layperson []
+synonym: "Behavioral disorders" EXACT layperson []
+synonym: "Behavioral disturbances" EXACT layperson []
+synonym: "Behavioral problems" EXACT layperson []
+synonym: "Behavioral symptoms" RELATED layperson []
+synonym: "Behavioral/psychiatric abnormalities" EXACT layperson []
+synonym: "Behavioural/Psychiatric abnormality" EXACT layperson []
+synonym: "Psychiatric disorders" EXACT layperson []
+synonym: "Psychiatric disturbances" EXACT layperson []
+xref: MSH:D000066553
+xref: MSH:D001526
+xref: SNOMEDCT_US:25786006
+xref: SNOMEDCT_US:277843001
+xref: UMLS:C0004941
+xref: UMLS:C0233514
+
+[Term]
+id: HP:0012638
+name: Abnormality of nervous system physiology
+def: "A functional anomaly of the nervous system." [HPO:probinson]
+created_by: peter
+creation_date: 2014-01-19T08:02:46Z
+is_a: HP:0000707 ! Abnormality of the nervous system
+xref: UMLS:C4022811
+
+[Term]
+id: HP:0000707
+name: Abnormality of the nervous system
+def: "An abnormality of the nervous system." [HPO:probinson]
+alt_id: HP:0001333
+alt_id: HP:0006987
+comment: The nervous system comprises the neuraxis (brain, spinal cord, and ventricles), the autonomic nervous system, the enteric nervous system, and the peripheral nervous system.
+is_a: HP:0000118 ! Phenotypic abnormality
+synonym: "Abnormality of the nervous system" EXACT layperson []
+synonym: "Brain and/or spinal cord issue" BROAD layperson []
+synonym: "Neurologic abnormalities" EXACT layperson []
+synonym: "Neurological abnormality" EXACT layperson []
+xref: MSH:D009421
+xref: SNOMEDCT_US:88425004
+xref: UMLS:C0497552
+
+[Term]
+id: HP:0000118
+name: Phenotypic abnormality
+def: "A phenotypic abnormality." [HPO:probinson]
+comment: This is the root of the phenotypic abnormality subontology of the HPO.
+is_a: HP:0000001 ! All
+synonym: "Organ abnormality" EXACT []
+xref: UMLS:C4021819
+
+[Term]
+id: HP:0000001
+name: All
+comment: Root of all terms in the Human Phenotype Ontology.
+xref: UMLS:C0444868
+
+[query_answer]
+[Term]
+id: HP:0025256
+name: Ameliorated by heat
+def: "Applies to a sign or symptom that is improved or made more bearable by heat (including fever)." []
+is_a: HP:0025254 ! Ameliorated by
+property_value: http://purl.org/dc/elements/1.1/creator HPO:probinson xsd:string
+property_value: http://purl.org/dc/elements/1.1/date 2016-12-17T14:20:45Z xsd:dateTime
+
+[Term]
+id: HP:0025254
+name: Ameliorated by
+def: "An ameliorating factor is defined as an external factor that leads to the manifestation of a sign or symptom in a person improving or becoming more bearable." []
+is_a: HP:0012823 ! Clinical modifier
+property_value: http://purl.org/dc/elements/1.1/creator HPO:probinson xsd:string
+property_value: http://purl.org/dc/elements/1.1/date 2016-12-17T14:17:46Z xsd:dateTime
+synonym: "Improved by" EXACT []
+
+[Term]
+id: HP:0012823
+name: Clinical modifier
+def: "This subontology is designed to provide terms to characterize and specify the phenotypic abnormalities defined in the Phenotypic abnormality subontology, with respect to severity, laterality, age of onset, and other aspects." [HPO:probinson]
+alt_id: HP:0000004
+comment: Note that some of the terms, such as Intellectual disability, have children terms such as Severe intellectual disability that represent precomposed combinations of modifiers and phenotypic abnormality terms. This done where the medical community commonly uses these terms with a fixed meaning (for instance, the Intellectual disability terms are used with specific IQ ranges). For computational reasoning, the semantics are intended to be the same as if there was a combination of the phenotype term and the clinical modifier term.
+created_by: peter
+creation_date: 2014-06-06T06:34:24Z
+is_a: HP:0000001 ! All
+synonym: "Phenotypic modifier" EXACT []
+xref: UMLS:C4021064
+
+[Term]
+id: HP:0000001
+name: All
+comment: Root of all terms in the Human Phenotype Ontology.
+xref: UMLS:C0444868
+
+[query_answer]
+[Term]
+id: HP:0003677
+name: Slow progression
+alt_id: HP:0003675
+alt_id: HP:0003681
+is_a: HP:0003679 ! Pace of progression
+synonym: "Signs and symptoms worsen slowly with time" EXACT layperson [https://orcid.org/0000-0001-5208-3432, https://orcid.org/0000-0002-6548-5200]
+synonym: "Slow disease progression" EXACT []
+synonym: "Slowly progressive" EXACT []
+synonym: "Slowly progressive disorder" EXACT []
+xref: UMLS:C1854494
+
+[Term]
+id: HP:0003679
+name: Pace of progression
+is_a: HP:0031797 ! Clinical course
+xref: UMLS:C4025580
+
+[Term]
+id: HP:0031797
+name: Clinical course
+def: "The course a disease typically takes from its onset, progression in time, and eventual resolution or death of the affected individual." []
+is_a: HP:0000001 ! All
+property_value: http://purl.org/dc/elements/1.1/creator "peter" xsd:string
+property_value: http://purl.org/dc/elements/1.1/date 2018-02-25T14:55:46Z xsd:dateTime
+synonym: "Natural history of disease" RELATED []
+
+[Term]
+id: HP:0000001
+name: All
+comment: Root of all terms in the Human Phenotype Ontology.
+xref: UMLS:C0444868
+
+[query_answer]
+[Term]
+id: HP:0040283
+name: Occasional
+def: "Present in 5% to 29% of the cases." []
+created_by: HPO:skoehler
+is_a: HP:0040279 ! Frequency
+property_value: http://purl.org/dc/elements/1.1/creator ORCID:0000-0002-5316-1399 xsd:string
+synonym: "Occasional (29-5%)" EXACT []
+xref: ORPHA:453313
+
+[Term]
+id: HP:0040279
+name: Frequency
+def: "Class to represent frequency of phenotypic abnormalities within a patient cohort." []
+comment: Aligned with Orphanet
+created_by: HPO:skoehler
+is_a: HP:0000001 ! All
+property_value: http://purl.org/dc/elements/1.1/creator ORCID:0000-0002-5316-1399 xsd:string
+
+[Term]
+id: HP:0000001
+name: All
+comment: Root of all terms in the Human Phenotype Ontology.
+xref: UMLS:C0444868
+
