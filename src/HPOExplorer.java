@@ -1,10 +1,18 @@
+// Author 		: Jacob Laframboise
+// Date			: February, 2019
+// Description 	: This program reads in data from HPO.txt, and stores all the
+//                terms in a way that they can be queried using the term class
+//                and the query class.
+// Version		: 1.0
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+// this class will load in the data, create the term objects and create the
+// network of parent child references, and run the queries.
 public class HPOExplorer {
 
     // class variables ---------------------------------------------------------
@@ -43,10 +51,9 @@ public class HPOExplorer {
             Term t = new Term(id);
             while ((line = reader.readLine()) != null && !line.equals("")) {
                 String[] tokens = line.split(": ");
-                //System.out.println(tokens);
+                // a switch to add the attributes to a term based on the tag
                 switch (tokens[0]) {
                     case "name":
-                        //System.out.println(tokens.get(1));
                         t.setName(tokens[1]);
                         break;
                     case "comment":
@@ -111,11 +118,10 @@ public class HPOExplorer {
                         System.out.println(line);
                         t.printData();
                 }
-
             }
             return t;
         } catch (IOException ie) {
-            //System.out.println("Heck, IOError");
+            System.out.println("IOError while reading in terms. ");
             ie.printStackTrace();
         }
         return null;
@@ -124,6 +130,7 @@ public class HPOExplorer {
     // a function that creates a hashmap 'index' which maps a string id to
     // an integer index of where to find the term in the terms arraylist
     // takes in a string id and returns an integer index
+    // this will save time when doing a query.
     private static HashMap<String, Integer> indexTerms() {
         //System.out.println(terms.size());
         HashMap<String, Integer> index = new HashMap<>();
@@ -137,7 +144,7 @@ public class HPOExplorer {
     // term objects to the child. It takes in the child object and the index
     private static void addParentsToTerm(Term child, HashMap<String, Integer> index) {
         if (child.getParentIds().size() > 0) {
-            //System.out.println(child.getParentIds());
+            // for every parent, add self as a child
             for (String parentId : child.getParentIds()) {
                 Term parent = terms.get(index.get(parentId));
                 child.addParent(parent);
@@ -154,6 +161,7 @@ public class HPOExplorer {
     private static void findLongestPath(ArrayList<Term> terms) {
         Query longestQuery = new Query(terms.get(0).getId(), terms);
 
+        // query every term
         for (Term term : terms) {
             Query q = new Query(term.getId(), terms);
             q.runQuery(false);
@@ -161,6 +169,8 @@ public class HPOExplorer {
                 longestQuery = q;
             }
         }
+
+        // output the longest query to file
         try {
             HPOExplorer.writer.write("max_path=" + longestQuery.getLength() + "\n");
         } catch (IOException ie) {
@@ -175,8 +185,8 @@ public class HPOExplorer {
         try {
             BufferedReader reader = Files.newBufferedReader(Paths.get("res\\queries.txt"));
             String line;
+            // for every line in the file, run a query with it
             while ((line = reader.readLine()) != null) {
-                //System.out.println(line);
                 String id = line.split(": ")[1];
                 Query q = new Query(id, terms);
                 writer.write("[query_answer]\n");
@@ -184,7 +194,7 @@ public class HPOExplorer {
                 writer.write("");
             }
         } catch (IOException ie) {
-            //System.out.println("error in io. ");
+            System.out.println("error in io while running a queries ");
             ie.printStackTrace();
         }
     }
@@ -192,38 +202,50 @@ public class HPOExplorer {
     // a main function to drive the parsing of HPO.txt, organizing the ontology,
     // running queries and writing the results.
     public static void main(String[] args) {
+        System.out.println("Welcome to the HPO Explorer!");
+        System.out.println("This program will read in the terms from HPO.txt");
+        System.out.println("It will store and query the data and will output");
+        System.out.println("the results to results.txt, and output the longest");
+        System.out.println("query to maxpath.txt.");
+        System.out.println();
+        System.out.println("Running now!");
 
+        // load the data and make the index
         loadData("res\\HPO.txt");
         HPOExplorer.index = indexTerms();
-        //System.out.println(index);
+        System.out.println("Done loading the data. ");
 
+        // create all the parent child reference relationships
         for (Term term : terms) {
             addParentsToTerm(term, index);
         }
+        System.out.println("Done adding parent-child references. ");
 
+        // run all the queries.
         try {
             HPOExplorer.writer = new BufferedWriter(new FileWriter("res\\results.txt"));
             runQueries();
             HPOExplorer.writer.close();
-
         } catch (IOException ie) {
+            System.out.println("Error in running and saving the queries to file. ");
             ie.printStackTrace();
-        } finally {
-            //System.out.println("\nDone execution.");
+        } finally{
+            System.out.println("Done writing results of queries. ");
         }
 
+        // find and output the maxpath
         try {
             HPOExplorer.writer = new BufferedWriter(new FileWriter("res\\maxpath.txt"));
             findLongestPath(terms);
             HPOExplorer.writer.close();
         } catch (IOException ie) {
-            //System.out.println("IO OOps in main.");
+            System.out.println("Error in getting and outputting maxpath. ");
             ie.printStackTrace();
         } finally {
-            //System.out.println("Done filing maxpath. ");
+            System.out.println("Done outputting maxpath. ");
         }
 
-
+        System.out.println("Completed!");
     }
 
 

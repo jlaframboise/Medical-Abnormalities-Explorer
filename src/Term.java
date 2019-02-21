@@ -1,3 +1,9 @@
+// Author 		: Jacob Laframboise
+// Date			: February, 2019
+// Description 	: This class holds the information for a term in the medical
+//                ontology.
+// Version		: 1.0
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +29,7 @@ public class Term {
     private final ArrayList<String> synonym = new ArrayList<>();
     private final ArrayList<String> xref = new ArrayList<>();
     private final ArrayList<String> parentIds = new ArrayList<>();
+    // arraylists to hold the references to the parents and children
     private final ArrayList<Term> children = new ArrayList<>();
     private final ArrayList<Term> parents = new ArrayList<>();
 
@@ -259,6 +266,7 @@ public class Term {
         ArrayList<String> keywords = new ArrayList<>(Arrays.asList("def", "name", "alt_id", "id", "comment", "synonym", "xref",
                 "is_a", "created_by", "creation_date", "subset", "consider", "is_anonymous",
                 "is_obsolete", "property_value", "replaced_by"));
+        // write every data point
         for (String str : getData()) {
             try {
                 if (keywords.contains(str)) {
@@ -278,6 +286,7 @@ public class Term {
         ArrayList<String> keywords = new ArrayList<>(Arrays.asList("def", "name", "alt_id", "id", "comment", "synonym", "xref",
                 "is_a", "created_by", "creation_date", "subset", "consider", "is_anonymous",
                 "is_obsolete", "property_value", "replaced_by"));
+        // print every data point
         for (String str : getData()) {
             if (keywords.contains(str)) {
                 System.out.print(str + ": ");

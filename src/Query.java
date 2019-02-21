@@ -1,3 +1,9 @@
+// Author 		: Jacob Laframboise
+// Date			: February, 2019
+// Description 	: This class holds the information for a query of the terms
+//                stored from the ontology.
+// Version		: 1.0
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -27,6 +33,7 @@ public class Query {
     // query on the forward direction of recursion.
     private void traverseToRoot(Term node, boolean outputToFile){
         length++;
+        // end case for recursion
         if (node.getId().equals("HP:0000001")){
             try{
                 if (outputToFile){
@@ -36,6 +43,7 @@ public class Query {
             }catch(IOException ie){
                 ie.printStackTrace();
             }
+        // recursive condition
         }else if(node.getParents().size()>0){
             if (outputToFile){
                 node.writeData();
@@ -45,12 +53,13 @@ public class Query {
                     ie.printStackTrace();
                 }
             }
+            // recursive step, occurs after output so the root will come after
+            // the leaf.
             traverseToRoot(node.getParents().get(0), outputToFile);
-            //node.printData();
         }
     }
 
-    // a simple function to call the recursive function
+    // a simple intuitive function to call the recursive function
     public void runQuery(boolean outputToFile){
         traverseToRoot(leaf, outputToFile);
     }
