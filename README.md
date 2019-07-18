@@ -1,7 +1,8 @@
-# HPO-Explorer
+# Medical Abnormalities Explorer
 ### By Jacob Laframboise
 
-HPO Explorer is a program to read in a medical ontology and to 
+Medical Abnormalities Explorer, or Human Phenotype Ontology Explorer (HPO Explorer)
+is a program to read in a medical ontology and to 
 organize it with children parent relationships emulating a tree
 structure. 
 
