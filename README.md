@@ -5,7 +5,7 @@ HPO Explorer is a program to read in a medical ontology and to
 organize it with children parent relationships emulating a tree
 structure. 
 
-It is for the second assignment in CISC 124. 
+This is for a project in a Queen's University Java course. 
 
 This project is organized into a subfolder for resources, and 
 a subfolder for source code. The files correctly reference 
