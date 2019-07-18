@@ -20,14 +20,17 @@ each other in this configuration.
 
 #### Run instructions
 To run:
--execute from within HPO-Explorer directory
--it works in InteliJ Idea. 
+- execute from within HPO-Explorer directory
+- it works in InteliJ Idea. 
 
-to run from windows command line:
-inside HPO-Explorer directory run:
+To run from windows command line:
+
+Inside HPO-Explorer directory run:
+
 javac -classpath src/ src/HPOExplorer.java
 
-then inside the same folder run:
+Then inside the same folder run:
+
 java -classpath src/ HPOExplorer
 
 
