@@ -1,5 +1,5 @@
 # HPO-Explorer
-##Jacob Laframboise
+## Jacob Laframboise
 
 HPO Explorer is a program to read in a medical ontology and to 
 organize it with children parent relationships emulating a tree
