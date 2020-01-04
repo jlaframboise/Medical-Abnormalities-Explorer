@@ -14,6 +14,8 @@ This is for a project in a Queen's University Java course.
 The dataset is the Human Phenotype Ontology, from
 https://hpo.jax.org/app/
 
+![The Human Phenotype Ontology](imgs/Hpo-Logo.png "HPO Logo")
+
 ### Organization
 This project is organized into a subfolder for resources, and 
 a subfolder for source code. The files correctly reference 
